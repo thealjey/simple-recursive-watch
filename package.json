@@ -1,6 +1,6 @@
 {
   "name": "simple-recursive-watch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple cross platform recursive directory watcher for NodeJS, based on \"fs.watch\", but not relying on its \"recursive\" option.",
   "main": "index.js",
   "scripts": {
