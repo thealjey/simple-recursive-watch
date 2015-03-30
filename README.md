@@ -28,4 +28,4 @@ library is for.
 
 ####Explanation
 The provided callback is invoked, immediately and only once, when somewhere in the *src* directory a ".js" file is
-created, edited, renamed, moved around or deleted, excluding those residing in a "__tests__" directory.
+created, edited, renamed, moved around or deleted, excluding those residing in a "\_\_tests\_\_" directory.
