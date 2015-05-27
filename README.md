@@ -25,7 +25,7 @@ library is for.
     watch('lib', 'js', function () {
       console.log('something changed');
     }, '__tests__');
-###Explanation
+### Explanation
 
 The provided callback is invoked, immediately and only once, when somewhere in the __src__ directory a __".js"__ file is
 created, edited, renamed, moved around or deleted, excluding those residing in a __"\_\_tests\_\_"__ directory.
