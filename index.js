@@ -62,7 +62,7 @@ var DirectoryWatcher = (function (parent) {
             }
             emitChange();
           }).bind(this));
-        } else {
+        } else if (type.test(file)) {
           emitChange();
         }
       }).bind(this));
