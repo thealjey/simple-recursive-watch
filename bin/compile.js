@@ -1,5 +1,3 @@
-/* @flow */
-
 var path = require('path'),
     mkdirp = require('mkdirp'),
     webcompiler = require('webcompiler');
