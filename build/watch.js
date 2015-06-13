@@ -21,9 +21,10 @@ exports['default'] = function (dir, type, callback) {
 
   _fs2['default'].realpath(dir, function (e, directory) {
     if (e) {
-      return callback(e);
+      return console.error(e);
     }
-    callback(null, new _DirectoryWatcher.DirectoryWatcher(directory, new RegExp('.' + type + '$'), exclude, (0, _lodashFunctionDebounce2['default'])(callback, 150)));
+
+    new _DirectoryWatcher.DirectoryWatcher(directory, new RegExp('.' + type + '$'), exclude, (0, _lodashFunctionDebounce2['default'])(callback, 150));
   });
 };
 
