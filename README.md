@@ -27,8 +27,8 @@ library is for.
     }, '__tests__', 'ignoreMe.js');
 ### Explanation
 
-The provided callback is invoked, immediately and only once, when somewhere in the __src__ directory a __".js"__ file is
-created, edited, renamed, moved around or deleted, excluding those residing in a __"\_\_tests\_\_"__ directory or having
-a name __"ignoreMe.js"__.
+The provided callback is invoked, immediately and only once, when somewhere in the __src__ directory a **".js"** file is
+created, edited, renamed, moved around or deleted, excluding those residing in a **"\_\_tests\_\_"** directory or having
+a name **"ignoreMe.js"**.
 
 You can specify any number of file or directory names to ignore.
