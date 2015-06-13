@@ -20,7 +20,7 @@ var DirectoryWatcher = (function () {
     this.dir = dir;
     _fs2['default'].readdir(dir, function (e, contents) {
       if (e) {
-        return callback(e);
+        return console.error(e);
       }
       _this.children = contents.filter(function (file) {
         if (-1 !== exclude.indexOf(file)) {
@@ -48,14 +48,14 @@ var DirectoryWatcher = (function () {
               i = files.indexOf(file);
               if (-1 !== i) {
                 files.splice(i, 1);
-                callback(null, _this);
+                callback();
                 return;
               }
               i = _this.indexOf(file);
               if (-1 !== i) {
                 _this.children[i].stop();
                 _this.children.splice(i, 1);
-                callback(null, _this);
+                callback();
               }
               return;
             }
@@ -78,10 +78,10 @@ var DirectoryWatcher = (function () {
                 files.splice(i, 1);
               }
             }
-            callback(null, _this);
+            callback();
           });
         } else if (type.test(file)) {
-          callback(null, _this);
+          callback();
         }
       });
     });

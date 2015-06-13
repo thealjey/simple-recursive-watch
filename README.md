@@ -22,9 +22,7 @@ library is for.
 
     import watch from 'simple-recursive-watch';
     
-    watch('lib', 'js', function (e, watcher) {
-      if (e) return;
-      // you can invoke `watcher.stop()` at any moment to stop the watcher
+    watch('lib', 'js', function () {
       console.log('something changed');
     }, '__tests__', 'ignoreMe.js');
 ### Explanation
