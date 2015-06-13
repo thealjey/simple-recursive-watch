@@ -1,0 +1,10 @@
+[ignore]
+.*/invalidPackageJson/*
+.*/test/*
+
+[include]
+
+[libs]
+
+[options]
+suppress_comment=.*@noflow.*

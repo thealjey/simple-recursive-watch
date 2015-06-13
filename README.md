@@ -20,12 +20,17 @@ library is for.
     npm i simple-recursive-watch --save
 ### Example usage
 
-    var watch = require('simple-recursive-watch');
+    import watch from 'simple-recursive-watch';
     
-    watch('lib', 'js', function () {
+    watch('lib', 'js', function (e, watcher) {
+      if (e) return;
+      // you can invoke `watcher.stop()` at any moment to stop the watcher
       console.log('something changed');
-    }, '__tests__');
+    }, '__tests__', 'ignoreMe.js');
 ### Explanation
 
 The provided callback is invoked, immediately and only once, when somewhere in the __src__ directory a __".js"__ file is
-created, edited, renamed, moved around or deleted, excluding those residing in a __"\_\_tests\_\_"__ directory.
+created, edited, renamed, moved around or deleted, excluding those residing in a __"\_\_tests\_\_"__ directory or having
+a name __"ignoreMe.js"__.
+
+You can specify any number of file or directory names to ignore.
