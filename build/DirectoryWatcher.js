@@ -17,12 +17,14 @@ var DirectoryWatcher = (function () {
     _classCallCheck(this, DirectoryWatcher);
 
     var files = [];
+
     this.dir = dir;
     _fs2['default'].readdir(dir, function (e, contents) {
       if (e) {
         return console.error(e);
       }
-      _this.children = contents.filter(function (file) {
+
+      _this.children = contents.filter(function loopContents(file) {
         if (-1 !== exclude.indexOf(file)) {
           return false;
         }
@@ -36,12 +38,14 @@ var DirectoryWatcher = (function () {
       }).map(function (file) {
         return new DirectoryWatcher('' + dir + '/' + file, type, exclude, callback);
       });
+
       _this.task = _fs2['default'].watch(dir, function (event, file) {
+        var path = '' + dir + '/' + file,
+            i;
+
         if (-1 !== exclude.indexOf(file)) {
           return;
         }
-        var path = '' + dir + '/' + file,
-            i;
         if ('rename' === event) {
           _fs2['default'].stat(path, function (statErr, stats) {
             if (statErr) {
@@ -89,6 +93,7 @@ var DirectoryWatcher = (function () {
 
   DirectoryWatcher.prototype.indexOf = function indexOf(dir) {
     var i = this.children.length;
+
     while (i--) {
       if (dir === this.children[i].dir) {
         return i;
@@ -99,7 +104,7 @@ var DirectoryWatcher = (function () {
 
   DirectoryWatcher.prototype.stop = function stop() {
     this.task.close();
-    this.children.forEach(function (child) {
+    this.children.forEach(function loopChildren(child) {
       child.stop();
     });
     this.children = [];

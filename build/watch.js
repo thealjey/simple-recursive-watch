@@ -19,7 +19,7 @@ exports['default'] = function (dir, type, callback) {
     exclude[_key - 3] = arguments[_key];
   }
 
-  _fs2['default'].realpath(dir, function (e, directory) {
+  _fs2['default'].realpath(dir, function getDirectoryRealPath(e, directory) {
     if (e) {
       return console.error(e);
     }

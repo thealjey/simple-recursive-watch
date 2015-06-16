@@ -17,14 +17,20 @@ Unfortunately, though it cannot be reliably used to spy on a whole tree of folde
 library is for.
 ### Installation
 
-    npm i simple-recursive-watch --save
+```
+npm i simple-recursive-watch --save
+```
+
 ### Example usage
 
-    import watch from 'simple-recursive-watch';
-    
-    watch('lib', 'js', function () {
-      console.log('something changed');
-    }, '__tests__', 'ignoreMe.js');
+```
+import watch from 'simple-recursive-watch';
+
+watch('lib', 'js', function () {
+  console.log('something changed');
+}, '__tests__', 'ignoreMe.js');
+```
+
 ### Explanation
 
 The provided callback is invoked, immediately and only once, when somewhere in the __src__ directory a **".js"** file is
