@@ -1,3 +1,5 @@
+/* @flow */
+
 'use strict';
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
@@ -10,7 +12,27 @@ var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
+/**
+ * A simple `fs.watch` wrapper class
+ *
+ * @class
+ * @param {string}        dir      - A full system path to a directory
+ * @param {RegExp}        type     - A regular expression to match files
+ * @param {Array<string>} exclude  - An array of file and directory names to exclude
+ * @param {Function}      callback - A callback function
+ */
+
 var DirectoryWatcher = (function () {
+
+  /**
+   * Instantiates and starts the watcher
+   *
+   * @param {string}        dir      - A full system path to a directory
+   * @param {RegExp}        type     - A regular expression to match files
+   * @param {Array<string>} exclude  - An array of file and directory names to exclude
+   * @param {Function}      callback - A callback function
+   */
+
   function DirectoryWatcher(dir, type, exclude, callback) {
     var _this = this;
 
@@ -18,13 +40,36 @@ var DirectoryWatcher = (function () {
 
     var files = [];
 
+    /**
+     * A full system path to a directory
+     *
+     * @memberof DirectoryWatcher
+     * @instance
+     * @type {string}
+     */
     this.dir = dir;
     _fs2['default'].readdir(dir, function (e, contents) {
       if (e) {
         return console.error(e);
       }
 
-      _this.children = contents.filter(function loopContents(file) {
+      /**
+       * A collection of child watchers
+       *
+       * @memberof DirectoryWatcher
+       * @private
+       * @instance
+       * @type {Array<DirectoryWatcher>}
+       */
+      _this.children = contents.filter(
+
+      /**
+       * Executed for each entry in the directory contents
+       *
+       * @param  {string} file - A file or directory name
+       * @return {boolean} if false the entry will be filtered out
+       */
+      function loopContents(file) {
         if (-1 !== exclude.indexOf(file)) {
           return false;
         }
@@ -39,7 +84,23 @@ var DirectoryWatcher = (function () {
         return new DirectoryWatcher('' + dir + '/' + file, type, exclude, callback);
       });
 
-      _this.task = _fs2['default'].watch(dir, function (event, file) {
+      /**
+       * The `fs.FSWatcher` task
+       *
+       * @memberof DirectoryWatcher
+       * @private
+       * @instance
+       * @type {FSWatcher}
+       */
+      _this.task = _fs2['default'].watch(dir,
+
+      /**
+       * Executed whenever a change is detected in the contents of the "dir"
+       *
+       * @param {string} event - either 'rename' or 'change'
+       * @param {string} file  - the name of the file which triggered the event
+       */
+      function (event, file) {
         var path = '' + dir + '/' + file,
             i;
 
@@ -91,6 +152,16 @@ var DirectoryWatcher = (function () {
     });
   }
 
+  /**
+   * Searches for a child watcher with a specific directory name.
+   *
+   * @memberof DirectoryWatcher
+   * @instance
+   * @method indexOf
+   * @param  {string} dir - A directory name to search for
+   * @return {number} an index of a child watcher assigned to a directory, or -1 if not found
+   */
+
   DirectoryWatcher.prototype.indexOf = function indexOf(dir) {
     var i = this.children.length;
 
@@ -101,6 +172,14 @@ var DirectoryWatcher = (function () {
     }
     return -1;
   };
+
+  /**
+   * Stops the watcher
+   *
+   * @memberof DirectoryWatcher
+   * @instance
+   * @method stop
+   */
 
   DirectoryWatcher.prototype.stop = function stop() {
     this.task.close();

@@ -1,14 +1,33 @@
 var path = require('path'),
     mkdirp = require('mkdirp'),
-    webcompiler = require('webcompiler');
+    compiler = require('webcompiler'),
+    NativeProcess = require('webcompiler/build/NativeProcess');
 
 /*eslint-disable one-var*/
-var libDir = path.join(__dirname, '..', 'lib'), buildDir = path.join(__dirname, '..', 'build');
+var rootDir = path.join(__dirname, '..'),
+    libDir = path.join(rootDir, 'lib'),
+    buildDir = path.join(rootDir, 'build'),
+    flow = compiler.flow,
+    packageJS = compiler.packageJS;
 
 /*eslint-enable one-var*/
 
-mkdirp(buildDir, webcompiler.lintJS.bind(null, [libDir, __filename], webcompiler.flow.run.bind(webcompiler.flow,
-  function batch() {
-    webcompiler.packageJS(path.join(libDir, 'DirectoryWatcher.js'), path.join(buildDir, 'DirectoryWatcher.js'));
-    webcompiler.packageJS(path.join(libDir, 'watch.js'), path.join(buildDir, 'watch.js'));
-  })));
+mkdirp(buildDir,
+  compiler.lintJS.bind(null,
+    [libDir, __filename],
+    flow.run.bind(flow,
+      packageJS.bind(null, path.join(libDir, 'DirectoryWatcher.js'), path.join(buildDir, 'DirectoryWatcher.js'),
+        packageJS.bind(null, path.join(libDir, 'watch.js'), path.join(buildDir, 'watch.js'),
+          function compiled() {
+            (new NativeProcess(path.join(rootDir, 'node_modules', '.bin', 'jsdoc'))).run(Function.prototype, [
+              buildDir,
+              '-d', path.join(rootDir, 'docs'),
+              '-P', path.join(rootDir, 'package.json'),
+              '-R', path.join(rootDir, 'README.md')
+            ]);
+          }
+        )
+      )
+    )
+  )
+);
