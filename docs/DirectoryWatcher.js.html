@@ -1,19 +1,47 @@
-'use strict';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DirectoryWatcher.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DirectoryWatcher.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 var _bind = Function.prototype.bind;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i &lt; arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' &amp;&amp; superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass &amp;&amp; superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
 var _fs = require('fs');
 
@@ -65,7 +93,7 @@ var DirectoryWatcher = (function (_EventEmitter) {
      */
     this.type = type;
 
-    for (var _len = arguments.length, exclude = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    for (var _len = arguments.length, exclude = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key &lt; _len; _key++) {
       exclude[_key - 2] = arguments[_key];
     }
 
@@ -75,7 +103,7 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @memberof DirectoryWatcher
      * @protected
      * @instance
-     * @type {Array<string>}
+     * @type {Array&lt;string>}
      */
     this.exclude = exclude;
 
@@ -85,7 +113,7 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @memberof DirectoryWatcher
      * @private
      * @instance
-     * @type {Array<string>}
+     * @type {Array&lt;string>}
      */
     this.files = [];
 
@@ -95,7 +123,7 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @memberof DirectoryWatcher
      * @private
      * @instance
-     * @type {Array<DirectoryWatcher>}
+     * @type {Array&lt;DirectoryWatcher>}
      */
     this.children = [];
   }
@@ -332,7 +360,7 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * }, 'ignoreMe.js');
      */
     value: function watch(dir, extension, callback) {
-      for (var _len2 = arguments.length, exclude = Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
+      for (var _len2 = arguments.length, exclude = Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 &lt; _len2; _key2++) {
         exclude[_key2 - 3] = arguments[_key2];
       }
 
@@ -348,4 +376,26 @@ var DirectoryWatcher = (function (_EventEmitter) {
 })(_events.EventEmitter);
 
 exports['default'] = DirectoryWatcher;
-module.exports = exports['default'];
+module.exports = exports['default'];</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DirectoryWatcher.html">DirectoryWatcher</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Jul 15 2015 11:01:46 GMT+0300 (EEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

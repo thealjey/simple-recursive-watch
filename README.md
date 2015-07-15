@@ -21,13 +21,43 @@ library is for.
 npm i simple-recursive-watch --save
 ```
 
-### Example usage
+### API Documentation
+
+To get better acquainted with the available tools feel free to skim through the auto-generated
+[API Docs](https://rawgit.com/thealjey/simple-recursive-watch/master/docs/index.html).
+
+### Exposes 1 class
+
+`DirectoryWatcher` - recursively watches for file changes in a directory
 
 ```
-import watch from 'simple-recursive-watch';
+interface DirectoryWatcher {
+  constructor(dir: string, type: RegExp, ...exclude: Array<string>);
+  start();
+  stop();
+  static watch(dir: string, extension: string, callback: Function, ...exclude: Array<string>): DirectoryWatcher;
+}
+```
 
-watch('lib', 'js', function () {
-  console.log('something changed');
+### Arguments
+
+1. `dir` - a full system path to a directory
+2. `type` - a regular expression to match files
+3. `exclude` - files/directories to exclude (not full paths, just file/directory names)
+4. `extension` - a file extension to watch for
+5. `callback` - a callback function to execute whenever a file system change occurs
+
+### Example usage
+
+```javascript
+import {DirectoryWatcher} from 'simple-recursive-watch';
+import {join} from 'path';
+
+var libDir = join(__dirname, 'lib');
+
+DirectoryWatcher.watch(libDir, 'js', function () {
+  // some JavaScript file, not named "ignoreMe.js" and not residing
+  // in a "__tests__" directory, was changed in the "lib" directory
 }, '__tests__', 'ignoreMe.js');
 ```
 
