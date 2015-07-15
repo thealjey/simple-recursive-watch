@@ -2,6 +2,15 @@
 *A simple cross platform recursive directory watcher for NodeJS, based on __fs.watch__, but not relying on its
 __recursive__ option.*
 
+[![Build Status](https://travis-ci.org/thealjey/simple-recursive-watch.svg?branch=master)](https://travis-ci.org/thealjey/simple-recursive-watch)
+[![Coverage Status](https://coveralls.io/repos/thealjey/simple-recursive-watch/badge.svg?branch=master&service=github)](https://coveralls.io/github/thealjey/simple-recursive-watch?branch=master)
+[![Code Climate](https://codeclimate.com/github/thealjey/simple-recursive-watch/badges/gpa.svg)](https://codeclimate.com/github/thealjey/simple-recursive-watch)
+[![Dependency Status](https://david-dm.org/thealjey/simple-recursive-watch.svg)](https://david-dm.org/thealjey/simple-recursive-watch)
+[![devDependency Status](https://david-dm.org/thealjey/simple-recursive-watch/dev-status.svg)](https://david-dm.org/thealjey/simple-recursive-watch#info=devDependencies)
+[![peerDependency Status](https://david-dm.org/thealjey/simple-recursive-watch/peer-status.svg)](https://david-dm.org/thealjey/simple-recursive-watch#info=peerDependencies)
+[![npm version](https://badge.fury.io/js/simple-recursive-watch.svg)](http://badge.fury.io/js/simple-recursive-watch)
+[![Slack channel](https://img.shields.io/badge/slack-watcher-blue.svg)](https://webcompiler.slack.com/messages/watcher)
+
 I just got tired of **gulp.watch** and **gulp-watch**.
 Because they rely on a hopelessly broken *gaze* library, which besides being too resource intensive for my liking, also
 crashes all the time.
