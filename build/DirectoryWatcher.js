@@ -65,10 +65,6 @@ var DirectoryWatcher = (function (_EventEmitter) {
      */
     this.type = type;
 
-    for (var _len = arguments.length, exclude = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-      exclude[_key - 2] = arguments[_key];
-    }
-
     /**
      * files/directories to exclude
      *
@@ -77,6 +73,11 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @instance
      * @type {Array<string>}
      */
+
+    for (var _len = arguments.length, exclude = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      exclude[_key - 2] = arguments[_key];
+    }
+
     this.exclude = exclude;
 
     /**
@@ -100,19 +101,19 @@ var DirectoryWatcher = (function (_EventEmitter) {
     this.children = [];
   }
 
+  /**
+   * Searches for a child watcher with a specific directory name.
+   *
+   * @memberof DirectoryWatcher
+   * @private
+   * @instance
+   * @method indexOf
+   * @param  {string} dir - a directory name to search for
+   * @return {number} an index of a child watcher assigned to a directory, or -1 if not found
+   */
+
   _createClass(DirectoryWatcher, [{
     key: 'indexOf',
-
-    /**
-     * Searches for a child watcher with a specific directory name.
-     *
-     * @memberof DirectoryWatcher
-     * @private
-     * @instance
-     * @method indexOf
-     * @param  {string} dir - a directory name to search for
-     * @return {number} an index of a child watcher assigned to a directory, or -1 if not found
-     */
     value: function indexOf(dir) {
       var i = this.children.length;
 
@@ -123,8 +124,6 @@ var DirectoryWatcher = (function (_EventEmitter) {
       }
       return -1;
     }
-  }, {
-    key: 'handleEvent',
 
     /**
      * Handles the "rename" system event for a file
@@ -136,6 +135,8 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @param {string} file     - a base name of a file/directory that triggered the event
      * @param {string} location - a full system path to "file"
      */
+  }, {
+    key: 'handleEvent',
     value: function handleEvent(file, location) {
       var _this = this;
 
@@ -179,8 +180,6 @@ var DirectoryWatcher = (function (_EventEmitter) {
         _this.emit('change');
       });
     }
-  }, {
-    key: 'createChild',
 
     /**
      * Creates, starts and returns a new child DirectoryWatcher
@@ -192,6 +191,8 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @param  {string} location - a full system path to a child directory
      * @return {DirectoryWatcher}  a newly created child DirectoryWatcher
      */
+  }, {
+    key: 'createChild',
     value: function createChild(location) {
       var child = new (_bind.apply(DirectoryWatcher, [null].concat([location, this.type], _toConsumableArray(this.exclude))))();
 
@@ -199,8 +200,6 @@ var DirectoryWatcher = (function (_EventEmitter) {
       child.on('change', this.emit.bind(this, 'change'));
       return child;
     }
-  }, {
-    key: 'createChildren',
 
     /**
      * Scans the directory for the sub-directories and creates a list of child DirectoryWatcher instances
@@ -210,6 +209,8 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @instance
      * @method createChildren
      */
+  }, {
+    key: 'createChildren',
     value: function createChildren() {
       var _this2 = this;
 
@@ -234,8 +235,6 @@ var DirectoryWatcher = (function (_EventEmitter) {
         _this2.createTask();
       });
     }
-  }, {
-    key: 'createTask',
 
     /**
      * Creates the `fs.watch` task
@@ -245,6 +244,8 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @instance
      * @method createTask
      */
+  }, {
+    key: 'createTask',
     value: function createTask() {
       var _this3 = this;
 
@@ -267,8 +268,6 @@ var DirectoryWatcher = (function (_EventEmitter) {
         }
       });
     }
-  }, {
-    key: 'start',
 
     /**
      * Starts the watcher
@@ -282,6 +281,8 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * });
      * watcher.start();
      */
+  }, {
+    key: 'start',
     value: function start() {
       if (this.task) {
         console.error('already started');
@@ -289,8 +290,6 @@ var DirectoryWatcher = (function (_EventEmitter) {
         this.createChildren();
       }
     }
-  }, {
-    key: 'stop',
 
     /**
      * Stops the watcher
@@ -301,6 +300,8 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @example
      * watcher.stop();
      */
+  }, {
+    key: 'stop',
     value: function stop() {
       if (this.task) {
         this.task.close();
@@ -312,8 +313,6 @@ var DirectoryWatcher = (function (_EventEmitter) {
         console.error('not running');
       }
     }
-  }], [{
-    key: 'watch',
 
     /**
      * A convenience shortcut method for starting a watcher
@@ -331,6 +330,8 @@ var DirectoryWatcher = (function (_EventEmitter) {
      *   // some JavaScript file, not named "ignoreMe.js", was changed in the "lib" directory
      * }, 'ignoreMe.js');
      */
+  }], [{
+    key: 'watch',
     value: function watch(dir, extension, callback) {
       for (var _len2 = arguments.length, exclude = Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
         exclude[_key2 - 3] = arguments[_key2];
