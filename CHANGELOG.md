@@ -1,3 +1,7 @@
+### v2.0.2
+
+* updated webcompiler to 1.3.0
+
 ### v1.2.1
 
 * Updated webcompiler to 0.3.2, which made babel unnecessary when building the docs

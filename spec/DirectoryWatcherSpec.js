@@ -1,5 +1,4 @@
 /* @flow */
-/*global describe, it, expect, beforeEach, spyOn, jasmine*/
 
 import fs from 'fs';
 import DirectoryWatcher from '../lib/DirectoryWatcher';
