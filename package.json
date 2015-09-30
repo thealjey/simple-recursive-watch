@@ -24,15 +24,15 @@
   },
   "homepage": "https://github.com/thealjey/simple-recursive-watch",
   "dependencies": {
-    "babel-runtime": "^5.8.20"
+    "babel-runtime": "^5.8.25"
   },
   "devDependencies": {
-    "babel": "^5.8.21",
-    "babel-istanbul": "^0.3.17",
-    "coveralls": "^2.11.3",
-    "jasmine-es6": "^0.0.17",
-    "jsdoc": "^3.3.2",
+    "babel": "^5.8.23",
+    "babel-istanbul": "^0.3.20",
+    "coveralls": "^2.11.4",
+    "jasmine-es6": "^0.0.18",
+    "jsdoc": "^3.3.3",
     "lodash": "^3.10.1",
-    "webcompiler": "^1.4.0"
+    "webcompiler": "^1.5.0"
   }
 }
