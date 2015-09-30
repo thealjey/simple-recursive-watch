@@ -33,7 +33,7 @@ var _events = require('events');
  * import {DirectoryWatcher} from 'simple-recursive-watch';
  * import {join} from 'path';
  *
- * var libDir = join(__dirname, 'lib'),
+ * let libDir = join(__dirname, 'lib'),
  *     watcher = new DirectoryWatcher(libDir, /\.js$/, 'ignoreMe.js');
  */
 
@@ -141,7 +141,7 @@ var DirectoryWatcher = (function (_EventEmitter) {
       var _this = this;
 
       (0, _fs.stat)(location, function (e, stats) {
-        var i;
+        var i = undefined;
 
         if (e) {
           i = _this.files.indexOf(file);
@@ -326,7 +326,7 @@ var DirectoryWatcher = (function (_EventEmitter) {
      * @param {...string} exclude   - files/directories to exclude (not full paths, just file/directory names)
      * @return {DirectoryWatcher} a watcher instance
      * @example
-     * var watcher = DirectoryWatcher.watch(libDir, 'js', function () {
+     * let watcher = DirectoryWatcher.watch(libDir, 'js', function () {
      *   // some JavaScript file, not named "ignoreMe.js", was changed in the "lib" directory
      * }, 'ignoreMe.js');
      */

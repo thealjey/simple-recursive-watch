@@ -7,7 +7,7 @@ import {EventEmitter} from 'events';
 describe('DirectoryWatcher', function () {
 
   /* @noflow */
-  var watcher, spy;
+  let watcher, spy;
 
   beforeEach(function () {
     spy = jasmine.createSpy('spy');
@@ -47,7 +47,7 @@ describe('DirectoryWatcher', function () {
   describe('stop started', function () {
 
     /* @noflow */
-    var child1, child2;
+    let child1, child2;
 
     beforeEach(function () {
       child1 = new DirectoryWatcher('/path/to/the/first/directory', /\.js$/, 'ignoreMe.js', 'ignoreMeToo');
@@ -115,7 +115,7 @@ describe('DirectoryWatcher', function () {
     });
 
     describe('readdir error', function () {
-      var contents = [];
+      const contents = [];
 
       beforeEach(function () {
         spyOn(fs, 'readdir').and.callFake(function (dir, callback) {
@@ -140,7 +140,7 @@ describe('DirectoryWatcher', function () {
     });
 
     describe('readdir success', function () {
-      var contents = ['app.js', 'app.css', 'childRir1', 'childRir2', 'ignoreMe.js', 'script.js', 'ignoreMeToo'];
+      const contents = ['app.js', 'app.css', 'childRir1', 'childRir2', 'ignoreMe.js', 'script.js', 'ignoreMeToo'];
 
       beforeEach(function () {
         spyOn(fs, 'readdir').and.callFake(function (dir, callback) {
@@ -176,7 +176,7 @@ describe('DirectoryWatcher', function () {
   describe('createChild', function () {
 
     /* @noflow */
-    var child;
+    let child;
 
     beforeEach(function () {
       spyOn(fs, 'readdir');
@@ -306,7 +306,7 @@ describe('DirectoryWatcher', function () {
     describe('fs.stat error', function () {
 
       /* @noflow */
-      var stats;
+      let stats;
 
       beforeEach(function () {
         stats = {isDirectory: jasmine.createSpy('isDirectory')};
@@ -347,7 +347,7 @@ describe('DirectoryWatcher', function () {
       describe('known directory', function () {
 
         /* @noflow */
-        var child;
+        let child;
 
         beforeEach(function () {
           child = new DirectoryWatcher('/path/to/a/directory/someDir', /\.js$/, 'ignoreMe.js', 'ignoreMeToo');
@@ -405,7 +405,7 @@ describe('DirectoryWatcher', function () {
       describe('is directory', function () {
 
         /* @noflow */
-        var stats;
+        let stats;
 
         beforeEach(function () {
           stats = {isDirectory: jasmine.createSpy('isDirectory').and.returnValue(true)};
@@ -443,7 +443,7 @@ describe('DirectoryWatcher', function () {
         describe('known directory', function () {
 
           /* @noflow */
-          var child;
+          let child;
 
           beforeEach(function () {
             child = new DirectoryWatcher('/path/to/a/directory/someDir', /\.js$/, 'ignoreMe.js', 'ignoreMeToo');
@@ -473,7 +473,7 @@ describe('DirectoryWatcher', function () {
       });
 
       describe('is not a directory', function () {
-        var stats;
+        let stats;
 
         beforeEach(function () {
           stats = {isDirectory: jasmine.createSpy('isDirectory').and.returnValue(false)};
@@ -552,7 +552,7 @@ describe('DirectoryWatcher', function () {
   describe('watch', function () {
 
     /* @noflow */
-    var child;
+    let child;
 
     beforeEach(function () {
       spyOn(DirectoryWatcher.prototype, 'start');
