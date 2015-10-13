@@ -1,3 +1,19 @@
+---
+---
+---
+
+# DEPRECATION WARNING
+
+This project has been deprecated and will no longer receive updates.
+
+Please consider using [Watchman](https://facebook.github.io/watchman/) and the
+[watch](http://thealjey.github.io/webcompiler/global.html#watch) function from
+[webcompiler](https://github.com/thealjey/webcompiler) instead.
+
+---
+---
+---
+
 # simple-recursive-watch
 *A simple cross platform recursive directory watcher for NodeJS, based on __fs.watch__, but not relying on its
 __recursive__ option.*

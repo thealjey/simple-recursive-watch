@@ -5,8 +5,6 @@ import DirectoryWatcher from '../lib/DirectoryWatcher';
 import {EventEmitter} from 'events';
 
 describe('DirectoryWatcher', function () {
-
-  /* @noflow */
   let watcher, spy;
 
   beforeEach(function () {
@@ -21,6 +19,9 @@ describe('DirectoryWatcher', function () {
   });
 
   it('configures itself', function () {
+    if (!watcher) {
+      return;
+    }
     expect(watcher.dir).toBe('/path/to/a/directory');
     expect(watcher.type).toEqual(/\.js$/);
     expect(watcher.exclude).toEqual(['ignoreMe.js', 'ignoreMeToo']);
@@ -31,10 +32,16 @@ describe('DirectoryWatcher', function () {
   describe('stop not started', function () {
 
     beforeEach(function () {
+      if (!watcher) {
+        return;
+      }
       watcher.stop();
     });
 
     it('does not throw', function () {
+      if (!watcher) {
+        return;
+      }
       expect(watcher.stop.bind(watcher)).not.toThrow();
     });
 
@@ -45,11 +52,12 @@ describe('DirectoryWatcher', function () {
   });
 
   describe('stop started', function () {
-
-    /* @noflow */
     let child1, child2;
 
     beforeEach(function () {
+      if (!watcher) {
+        return;
+      }
       child1 = new DirectoryWatcher('/path/to/the/first/directory', /\.js$/, 'ignoreMe.js', 'ignoreMeToo');
       child2 = new DirectoryWatcher('/path/to/the/second/directory', /\.js$/);
       spyOn(child1, 'stop');
@@ -60,10 +68,16 @@ describe('DirectoryWatcher', function () {
     });
 
     it('closes the task', function () {
+      if (!watcher) {
+        return;
+      }
       expect(watcher.task.close).toHaveBeenCalled();
     });
 
     it('loops through children', function () {
+      if (!watcher || !child1 || !child2) {
+        return;
+      }
       expect(child1.stop).toHaveBeenCalled();
       expect(child2.stop).toHaveBeenCalled();
       expect(watcher.children).toEqual([]);
@@ -78,6 +92,9 @@ describe('DirectoryWatcher', function () {
   describe('start not started', function () {
 
     beforeEach(function () {
+      if (!watcher) {
+        return;
+      }
       spyOn(watcher, 'createChildren');
       watcher.start();
     });
@@ -87,6 +104,9 @@ describe('DirectoryWatcher', function () {
     });
 
     it('calls createChildren', function () {
+      if (!watcher) {
+        return;
+      }
       expect(watcher.createChildren).toHaveBeenCalled();
     });
 
@@ -95,6 +115,9 @@ describe('DirectoryWatcher', function () {
   describe('start already started', function () {
 
     beforeEach(function () {
+      if (!watcher) {
+        return;
+      }
       watcher.task = true;
       watcher.start();
     });
@@ -118,6 +141,9 @@ describe('DirectoryWatcher', function () {
       const contents = [];
 
       beforeEach(function () {
+        if (!watcher) {
+          return;
+        }
         spyOn(fs, 'readdir').and.callFake(function (dir, callback) {
           callback('something bad happened', contents);
         });
@@ -143,6 +169,9 @@ describe('DirectoryWatcher', function () {
       const contents = ['app.js', 'app.css', 'childRir1', 'childRir2', 'ignoreMe.js', 'script.js', 'ignoreMeToo'];
 
       beforeEach(function () {
+        if (!watcher) {
+          return;
+        }
         spyOn(fs, 'readdir').and.callFake(function (dir, callback) {
           callback(null, contents);
         });
@@ -159,6 +188,9 @@ describe('DirectoryWatcher', function () {
       });
 
       it('creates children', function () {
+        if (!watcher) {
+          return;
+        }
         expect(watcher.createChild).toHaveBeenCalledWith('/path/to/a/directory/childRir1');
         expect(watcher.createChild).toHaveBeenCalledWith('/path/to/a/directory/childRir2');
         expect(watcher.children).toEqual(['DirectoryWatcher for: /path/to/a/directory/childRir1',
@@ -166,6 +198,9 @@ describe('DirectoryWatcher', function () {
       });
 
       it('calls createTask', function () {
+        if (!watcher) {
+          return;
+        }
         expect(watcher.createTask).toHaveBeenCalled();
       });
 
@@ -174,11 +209,12 @@ describe('DirectoryWatcher', function () {
   });
 
   describe('createChild', function () {
-
-    /* @noflow */
     let child;
 
     beforeEach(function () {
+      if (!watcher) {
+        return;
+      }
       spyOn(fs, 'readdir');
       spyOn(DirectoryWatcher.prototype, 'start');
       child = watcher.createChild('/path/to/a/directory/childRir');
@@ -189,6 +225,9 @@ describe('DirectoryWatcher', function () {
     });
 
     it('configures', function () {
+      if (!child) {
+        return;
+      }
       expect(child.dir).toBe('/path/to/a/directory/childRir');
       expect(child.type).toEqual(/\.js$/);
       expect(child.exclude).toEqual(['ignoreMe.js', 'ignoreMeToo']);
@@ -201,6 +240,9 @@ describe('DirectoryWatcher', function () {
     });
 
     it('it bubbles up the change event', function () {
+      if (!child) {
+        return;
+      }
       child.emit('change');
       expect(spy).toHaveBeenCalled();
     });
@@ -216,6 +258,9 @@ describe('DirectoryWatcher', function () {
     describe('exclude', function () {
 
       beforeEach(function () {
+        if (!watcher) {
+          return;
+        }
         spyOn(fs, 'watch').and.callFake(function (file, callback) {
           callback('change', 'ignoreMeToo');
           return 'native watcher instance';
@@ -224,6 +269,9 @@ describe('DirectoryWatcher', function () {
       });
 
       it('assigns the task', function () {
+        if (!watcher) {
+          return;
+        }
         expect(watcher.task).toBe('native watcher instance');
       });
 
@@ -236,6 +284,9 @@ describe('DirectoryWatcher', function () {
       });
 
       it('does not call handleEvent', function () {
+        if (!watcher) {
+          return;
+        }
         expect(watcher.handleEvent).not.toHaveBeenCalled();
       });
 
@@ -244,6 +295,9 @@ describe('DirectoryWatcher', function () {
     describe('target file', function () {
 
       beforeEach(function () {
+        if (!watcher) {
+          return;
+        }
         spyOn(fs, 'watch').and.callFake(function (file, callback) {
           callback('change', 'script.js');
         });
@@ -255,6 +309,9 @@ describe('DirectoryWatcher', function () {
       });
 
       it('does not call handleEvent', function () {
+        if (!watcher) {
+          return;
+        }
         expect(watcher.handleEvent).not.toHaveBeenCalled();
       });
 
@@ -263,6 +320,9 @@ describe('DirectoryWatcher', function () {
     describe('other changes', function () {
 
       beforeEach(function () {
+        if (!watcher) {
+          return;
+        }
         spyOn(fs, 'watch').and.callFake(function (file, callback) {
           callback('rename', 'script.js');
         });
@@ -270,6 +330,9 @@ describe('DirectoryWatcher', function () {
       });
 
       it('calls handleEvent', function () {
+        if (!watcher) {
+          return;
+        }
         expect(watcher.handleEvent).toHaveBeenCalled();
       });
 
@@ -278,6 +341,9 @@ describe('DirectoryWatcher', function () {
     describe('change in an unsupported file', function () {
 
       beforeEach(function () {
+        if (!watcher) {
+          return;
+        }
         spyOn(fs, 'watch').and.callFake(function (file, callback) {
           callback('change', 'style.css');
         });
@@ -289,6 +355,9 @@ describe('DirectoryWatcher', function () {
       });
 
       it('does not call handleEvent', function () {
+        if (!watcher) {
+          return;
+        }
         expect(watcher.handleEvent).not.toHaveBeenCalled();
       });
 
@@ -299,13 +368,14 @@ describe('DirectoryWatcher', function () {
   describe('handleEvent', function () {
 
     beforeEach(function () {
+      if (!watcher) {
+        return;
+      }
       spyOn(watcher.files, 'indexOf').and.callThrough();
       spyOn(watcher, 'indexOf').and.callThrough();
     });
 
     describe('fs.stat error', function () {
-
-      /* @noflow */
       let stats;
 
       beforeEach(function () {
@@ -318,6 +388,9 @@ describe('DirectoryWatcher', function () {
       describe('known file', function () {
 
         beforeEach(function () {
+          if (!watcher) {
+            return;
+          }
           watcher.files = ['script.js'];
           watcher.handleEvent('script.js', '/path/to/a/directory/script.js');
         });
@@ -327,6 +400,9 @@ describe('DirectoryWatcher', function () {
         });
 
         it('forgets the file', function () {
+          if (!watcher) {
+            return;
+          }
           expect(watcher.files).toEqual([]);
         });
 
@@ -335,21 +411,28 @@ describe('DirectoryWatcher', function () {
         });
 
         it('does not search through the child watchers', function () {
+          if (!watcher) {
+            return;
+          }
           expect(watcher.indexOf).not.toHaveBeenCalled();
         });
 
         it('does not call stats.isDirectory', function () {
+          if (!stats) {
+            return;
+          }
           expect(stats.isDirectory).not.toHaveBeenCalled();
         });
 
       });
 
       describe('known directory', function () {
-
-        /* @noflow */
         let child;
 
         beforeEach(function () {
+          if (!watcher) {
+            return;
+          }
           child = new DirectoryWatcher('/path/to/a/directory/someDir', /\.js$/, 'ignoreMe.js', 'ignoreMeToo');
           spyOn(child, 'stop').and.callThrough();
           watcher.children = [child];
@@ -357,14 +440,23 @@ describe('DirectoryWatcher', function () {
         });
 
         it('searches through the child watchers', function () {
+          if (!watcher) {
+            return;
+          }
           expect(watcher.indexOf).toHaveBeenCalledWith('/path/to/a/directory/someDir');
         });
 
         it('calls child.stop', function () {
+          if (!child) {
+            return;
+          }
           expect(child.stop).toHaveBeenCalled();
         });
 
         it('forgets the directory', function () {
+          if (!watcher) {
+            return;
+          }
           expect(watcher.children).toEqual([]);
         });
 
@@ -373,6 +465,9 @@ describe('DirectoryWatcher', function () {
         });
 
         it('does not call stats.isDirectory', function () {
+          if (!stats) {
+            return;
+          }
           expect(stats.isDirectory).not.toHaveBeenCalled();
         });
 
@@ -381,6 +476,9 @@ describe('DirectoryWatcher', function () {
       describe('other errors', function () {
 
         beforeEach(function () {
+          if (!watcher) {
+            return;
+          }
           watcher.handleEvent('someDir', '/path/to/a/directory/someDir');
         });
 
@@ -389,6 +487,9 @@ describe('DirectoryWatcher', function () {
         });
 
         it('does not call stats.isDirectory', function () {
+          if (!stats) {
+            return;
+          }
           expect(stats.isDirectory).not.toHaveBeenCalled();
         });
 
@@ -399,12 +500,13 @@ describe('DirectoryWatcher', function () {
     describe('fs.stat success', function () {
 
       beforeEach(function () {
+        if (!watcher) {
+          return;
+        }
         spyOn(watcher.type, 'test').and.callThrough();
       });
 
       describe('is directory', function () {
-
-        /* @noflow */
         let stats;
 
         beforeEach(function () {
@@ -417,19 +519,31 @@ describe('DirectoryWatcher', function () {
         describe('unknown directory', function () {
 
           beforeEach(function () {
+            if (!watcher) {
+              return;
+            }
             spyOn(watcher, 'createChild').and.returnValue('new child instance');
             watcher.handleEvent('someDir', '/path/to/a/directory/someDir');
           });
 
           it('calls stats.isDirectory', function () {
+            if (!stats) {
+              return;
+            }
             expect(stats.isDirectory).toHaveBeenCalled();
           });
 
           it('searches through the child watchers', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.indexOf).toHaveBeenCalledWith('/path/to/a/directory/someDir');
           });
 
           it('creates a child', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.createChild).toHaveBeenCalledWith('/path/to/a/directory/someDir');
             expect(watcher.children).toEqual(['new child instance']);
           });
@@ -441,11 +555,12 @@ describe('DirectoryWatcher', function () {
         });
 
         describe('known directory', function () {
-
-          /* @noflow */
           let child;
 
           beforeEach(function () {
+            if (!watcher) {
+              return;
+            }
             child = new DirectoryWatcher('/path/to/a/directory/someDir', /\.js$/, 'ignoreMe.js', 'ignoreMeToo');
             spyOn(child, 'stop').and.callThrough();
             watcher.children = [child];
@@ -453,14 +568,23 @@ describe('DirectoryWatcher', function () {
           });
 
           it('calls child.stop', function () {
+            if (!child) {
+              return;
+            }
             expect(child.stop).toHaveBeenCalled();
           });
 
           it('forgets the directory', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.children).toEqual([]);
           });
 
           it('does not test the type', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.type.test).not.toHaveBeenCalled();
           });
 
@@ -485,14 +609,23 @@ describe('DirectoryWatcher', function () {
         describe('wrong type', function () {
 
           beforeEach(function () {
+            if (!watcher) {
+              return;
+            }
             watcher.handleEvent('style.css', '/path/to/a/directory/style.css');
           });
 
           it('tests the type', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.type.test).toHaveBeenCalledWith('style.css');
           });
 
           it('does not check the known files', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.files.indexOf).not.toHaveBeenCalled();
           });
 
@@ -501,14 +634,23 @@ describe('DirectoryWatcher', function () {
         describe('correct type unknown file', function () {
 
           beforeEach(function () {
+            if (!watcher) {
+              return;
+            }
             watcher.handleEvent('script.js', '/path/to/a/directory/script.js');
           });
 
           it('checks known files', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.files.indexOf).toHaveBeenCalled();
           });
 
           it('remembers the file', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.files.length).toBe(1);
           });
 
@@ -517,11 +659,17 @@ describe('DirectoryWatcher', function () {
         describe('correct type known file', function () {
 
           beforeEach(function () {
+            if (!watcher) {
+              return;
+            }
             watcher.files = ['app.js'];
             watcher.handleEvent('app.js', '/path/to/a/directory/app.js');
           });
 
           it('forgets the file', function () {
+            if (!watcher) {
+              return;
+            }
             expect(watcher.files.length).toBe(0);
           });
 
@@ -536,25 +684,35 @@ describe('DirectoryWatcher', function () {
   describe('indexOf', function () {
 
     beforeEach(function () {
+      if (!watcher) {
+        return;
+      }
       watcher.children = [new DirectoryWatcher('/path/to/a/directory/someDir', /\.js$/, 'ignoreMe.js', 'ignoreMeToo')];
     });
 
     it('finds a child', function () {
+      if (!watcher) {
+        return;
+      }
       expect(watcher.indexOf('/path/to/a/directory/someDir')).toBe(0);
     });
 
     it('returns -1 if nothing is found', function () {
+      if (!watcher) {
+        return;
+      }
       expect(watcher.indexOf('anything')).toBe(-1);
     });
 
   });
 
   describe('watch', function () {
-
-    /* @noflow */
     let child;
 
     beforeEach(function () {
+      if (!spy) {
+        return;
+      }
       spyOn(DirectoryWatcher.prototype, 'start');
       child = DirectoryWatcher.watch('/path/to/a/directory', 'js', spy, 'ignoreMe.js', 'ignoreMeToo');
     });
@@ -564,6 +722,9 @@ describe('DirectoryWatcher', function () {
     });
 
     it('configures', function () {
+      if (!child) {
+        return;
+      }
       expect(child.dir).toBe('/path/to/a/directory');
       expect(child.type).toEqual(/\.js$/);
       expect(child.exclude).toEqual(['ignoreMe.js', 'ignoreMeToo']);
@@ -576,6 +737,9 @@ describe('DirectoryWatcher', function () {
     });
 
     it('it bubbles up the change event', function () {
+      if (!child) {
+        return;
+      }
       child.emit('change');
       expect(spy).toHaveBeenCalled();
     });
